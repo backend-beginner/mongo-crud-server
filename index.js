@@ -79,7 +79,7 @@ async function run() {
       res.send(contacts);
     });
 
-    // Update Contact
+    // Single Contact to dynamic route
     app.get("/contacts/:id", async (req, res) => {
       const id = req.params.id;
       // query(looking) for a document that has ObjectId
@@ -96,6 +96,23 @@ async function run() {
       // console.log("New contact :", req.body);
       console.log("Added contact :", result);
       res.json(result); //Because it's API, send the result to the client site
+    });
+
+    // Edit & Saving Contact fetch() method:'PUT'
+    app.put("/contacts/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedContact = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          name: updatedContact.name,
+          number: updatedContact.number,
+        },
+      };
+      const result = await contactsCollection.updateOne(filter, updateDoc, options);
+      console.log("Edit & Saving", req);
+      res.json(result);
     });
 
     // Deleting Contact fetch() method:'DELETE'
