@@ -64,7 +64,7 @@ async function run() {
     console.log(result); 
     */
 
-    //GET API
+    //GET API Get All Contacts
     app.get("/contacts", async (req, res) => {
       const cursor = contactsCollection.find({});
 
@@ -78,6 +78,16 @@ async function run() {
 
       const contacts = await cursor.toArray();
       res.send(contacts);
+    });
+
+    // UPDATE Contact
+    app.get("/contacts/:id", async (req, res) => {
+      const id = req.params.id;
+      // query(looking) for a document that has ObjectId
+      const query = { _id: ObjectId(id) };
+      const contact = await contactsCollection.findOne(query);
+      console.log("Load Contact ID", id);
+      res.send(contact);
     });
 
     // POST API fetch() method:'POST'
