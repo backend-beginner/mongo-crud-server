@@ -1,7 +1,7 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const cors = require("cors");
-const ObjectId = require("mongodb").ObjectId; //Dont' forget this
+const ObjectId = require("mongodb").ObjectId; //Don't forget this
 
 const app = express();
 // const port = process.env.PORT || 5000;
@@ -68,19 +68,18 @@ async function run() {
     app.get("/contacts", async (req, res) => {
       const cursor = contactsCollection.find({});
 
-      //(1) To get the full collection we have to use find({}), and for condition we have to use find({condition})
+      //(1) To get the full collection we have to use find({}), and for other condition we have to use find({condition})
 
-      //(2) Here's cursor is a pointer that indicating the specific collection to find({})
+      //(2) Here, cursor is a pointer that indicating the specific collection
 
       //(3) But we can also declare directly
-
       // const contacts = await contactsCollection.find({}).toArray();
 
       const contacts = await cursor.toArray();
       res.send(contacts);
     });
 
-    // UPDATE Contact
+    // Update Contact
     app.get("/contacts/:id", async (req, res) => {
       const id = req.params.id;
       // query(looking) for a document that has ObjectId
@@ -94,12 +93,12 @@ async function run() {
     app.post("/contacts", async (req, res) => {
       const newContact = req.body;
       const result = await contactsCollection.insertOne(newContact);
-      console.log("Here's a new contact :", req.body);
-      console.log("Added user :", result);
-      res.send(result);
+      // console.log("New contact :", req.body);
+      console.log("Added contact :", result);
+      res.json(result); //Because it's API, send the result to the client site
     });
 
-    // DELETE Contact
+    // Deleting Contact fetch() method:'DELETE'
     app.delete("/contacts/:id", async (req, res) => {
       const id = req.params.id;
       // query(looking) for a document that has ObjectId
@@ -113,8 +112,8 @@ async function run() {
   }
 }
 run().catch(console.dir);
-//You have to call the function and catch the error.
-//And you already know that you can only use catch in async/await.
+//We must call the function and catch the error.
+//And we already know that we can only use catch in async/await.
 
 app.get("/", (req, res) => {
   res.send("My first CRUD server is getting ready.");
