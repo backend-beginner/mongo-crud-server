@@ -64,6 +64,12 @@ async function run() {
     console.log(result); 
     */
 
+    //CRUD Operation Begins
+    //(1) GET
+    //(2) POST
+    //(3) DELETE
+    //(4) PUT
+    
     //GET API Get All Contacts
     app.get("/contacts", async (req, res) => {
       const cursor = contactsCollection.find({});
@@ -89,7 +95,7 @@ async function run() {
       res.send(contact);
     });
 
-    // POST API fetch() method:'POST'
+    // POST API fetch() method:'POST' 
     app.post("/contacts", async (req, res) => {
       const newContact = req.body;
       const result = await contactsCollection.insertOne(newContact);
