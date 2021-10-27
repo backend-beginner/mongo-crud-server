@@ -1,11 +1,12 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const cors = require("cors");
+require("dotenv").config();
 const ObjectId = require("mongodb").ObjectId; //Don't forget this
 
 const app = express();
-// const port = process.env.PORT || 5000;
-const port = 5000;
+const port = process.env.PORT || 5000;
+// const port = 5000;
 
 app.use(cors());
 app.use(express.json());
